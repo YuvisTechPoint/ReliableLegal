@@ -5,7 +5,7 @@
  */
 
 // Production mode flag - set to true in production to disable debug logging
-const IS_PRODUCTION = false;
+const IS_PRODUCTION = true;
 
 // Production-safe console wrapper
 const debugLog = IS_PRODUCTION ? () => {} : console.log.bind(console);
@@ -1094,7 +1094,7 @@ function initServiceWorker() {
             try {
                 const registration = await navigator.serviceWorker.register('/sw.js');
                 
-                console.log('Service Worker registered successfully:', registration.scope);
+                debugLog('Service Worker registered successfully:', registration.scope);
                 
                 // Check for updates
                 registration.addEventListener('updatefound', () => {
@@ -1110,7 +1110,7 @@ function initServiceWorker() {
                 
                 // Enable background sync for forms
                 if ('sync' in window.ServiceWorkerRegistration.prototype) {
-                    console.log('Background sync supported');
+                    debugLog('Background sync supported');
                 }
                 
             } catch (error) {
@@ -1132,7 +1132,7 @@ function initPerformanceMonitoring() {
             const loadTime = perfData.loadEventEnd - perfData.loadEventStart;
             const domContentLoaded = perfData.domContentLoadedEventEnd - perfData.domContentLoadedEventStart;
             
-            console.log(`Page Load Metrics:
+            debugLog(`Page Load Metrics:
                 DOM Content Loaded: ${domContentLoaded}ms
                 Total Load Time: ${loadTime}ms
                 First Contentful Paint: ${performance.getEntriesByName('first-contentful-paint')[0]?.startTime || 'N/A'}ms
@@ -1140,7 +1140,7 @@ function initPerformanceMonitoring() {
             
             // Track slow loading
             if (loadTime > 3000) {
-                console.warn('Slow page load detected:', loadTime + 'ms');
+                debugWarn('Slow page load detected:', loadTime + 'ms');
             }
         }
     });
@@ -1152,10 +1152,10 @@ function initPerformanceMonitoring() {
             const entries = list.getEntries();
             const lastEntry = entries[entries.length - 1];
             
-            console.log('LCP:', lastEntry.startTime);
+            debugLog('LCP:', lastEntry.startTime);
             
             if (lastEntry.startTime > 2500) {
-                console.warn('Poor LCP detected:', lastEntry.startTime + 'ms');
+                debugWarn('Poor LCP detected:', lastEntry.startTime + 'ms');
             }
         }).observe({ entryTypes: ['largest-contentful-paint'] });
         
@@ -1163,10 +1163,10 @@ function initPerformanceMonitoring() {
         new PerformanceObserver((list) => {
             const entries = list.getEntries();
             entries.forEach(entry => {
-                console.log('FID:', entry.processingStart - entry.startTime);
+                debugLog('FID:', entry.processingStart - entry.startTime);
                 
                 if (entry.processingStart - entry.startTime > 100) {
-                    console.warn('Poor FID detected:', (entry.processingStart - entry.startTime) + 'ms');
+                    debugWarn('Poor FID detected:', (entry.processingStart - entry.startTime) + 'ms');
                 }
             });
         }).observe({ entryTypes: ['first-input'] });
@@ -1181,10 +1181,10 @@ function initPerformanceMonitoring() {
                 }
             });
             
-            console.log('CLS:', clsValue);
+            debugLog('CLS:', clsValue);
             
             if (clsValue > 0.1) {
-                console.warn('Poor CLS detected:', clsValue);
+                debugWarn('Poor CLS detected:', clsValue);
             }
         }).observe({ entryTypes: ['layout-shift'] });
     }
@@ -1237,7 +1237,7 @@ function initLazyLoading() {
                     
                     img.addEventListener('error', () => {
                         img.classList.add('error');
-                        console.warn('Failed to load image:', img.dataset.src);
+                        debugWarn('Failed to load image:', img.dataset.src);
                     });
                 }
             });
@@ -1295,7 +1295,7 @@ async function fetchWithRetry(url, options, retries = 3) {
             
             return response;
         } catch (error) {
-            console.warn(`Attempt ${i + 1} failed:`, error.message);
+            debugWarn(`Attempt ${i + 1} failed:`, error.message);
             
             if (i === retries - 1) {
                 throw error;
@@ -1366,7 +1366,7 @@ function storeFormForRetry(data) {
         });
         localStorage.setItem('pendingSubmissions', JSON.stringify(submissions));
         
-        console.log('Form stored for retry when online');
+        debugLog('Form stored for retry when online');
     } catch (error) {
         console.error('Failed to store form for retry:', error);
     }
@@ -1386,7 +1386,7 @@ function trackEvent(category, action, label = '') {
         }
         
         // Console logging for development
-        console.log(`Event: ${category}/${action}${label ? '/' + label : ''}`);
+        debugLog(`Event: ${category}/${action}${label ? '/' + label : ''}`);
     } catch (error) {
         console.error('Event tracking failed:', error);
     }
@@ -1693,6 +1693,6 @@ function respectReducedMotion() {
         `;
         document.head.appendChild(style);
         
-        console.log('Reduced motion mode enabled');
+        debugLog('Reduced motion mode enabled');
     }
 }
