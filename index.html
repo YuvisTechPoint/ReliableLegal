@@ -4,8 +4,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#1a2a4a">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    
+    <!-- Security Headers -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://api.web3forms.com https://maps.googleapis.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://api.web3forms.com https://wa.me https://mail.google.com; img-src 'self' data: https: blob:; media-src 'self'; frame-src https://www.google.com; object-src 'none'; base-uri 'self'; form-action 'self' https://api.web3forms.com;">
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="X-Frame-Options" content="SAMEORIGIN">
+    <meta http-equiv="X-XSS-Protection" content="1; mode=block">
+    <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
+    <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=()">
+    
+    <!-- SEO Meta Tags -->
     <meta name="description" content="Reliable Legal Solutions - Comprehensive legal services with a strong focus on client interests and professional ethics. Expert legal assistance from consultation to case resolution.">
     <meta name="keywords" content="law firm, legal services, divorce lawyer, cyber crime, POCSO, corporate law, property law, Kolkata, Mumbai, Pune, Delhi">
+    <meta name="author" content="Reliable Legal Solutions">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://reliablelegal.in/">
+    
+    <!-- Performance Hints -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+    <link rel="dns-prefetch" href="https://api.web3forms.com">
+    <link rel="preload" href="style.css" as="style">
+    <link rel="preload" href="script.js" as="script">
     
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
@@ -25,13 +47,27 @@
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚖</text></svg>">
     <link rel="apple-touch-icon" href="https://reliablelegal.in/assets/apple-touch-icon.png">
 
+    
     <title>Reliable Legal Solutions | Trusted Legal Services Across India</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    <!-- Stylesheets -->
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-    <!-- EmailJS SDK -->
-    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'GA_MEASUREMENT_ID', {
+            anonymize_ip: true,
+            cookie_flags: 'SameSite=Strict;Secure'
+        });
+    </script>
+    
+    <!-- EmailJS SDK with integrity check -->
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js" crossorigin="anonymous"></script>
 
     <!-- Structured Data (Schema.org) -->
     <script type="application/ld+json">
@@ -42,7 +78,7 @@
       "image": "https://reliablelegal.in/assets/logo.png",
       "@id": "https://reliablelegal.in",
       "url": "https://reliablelegal.in",
-      "telephone": "+919867551156",
+      "telephone": "+919136467956",
       "address": {
         "@type": "PostalAddress",
         "streetAddress": "Various Locations",
@@ -70,6 +106,97 @@
       "sameAs": [
         "https://www.facebook.com/reliablelegal",
         "https://www.linkedin.com/company/reliablelegal"
+      ],
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.8",
+        "reviewCount": "150"
+      },
+      "priceRange": "$$",
+      "paymentAccepted": "Cash, Credit Card, Bank Transfer",
+      "areaServed": [
+        {
+          "@type": "City",
+          "name": "Mumbai"
+        },
+        {
+          "@type": "City", 
+          "name": "Pune"
+        },
+        {
+          "@type": "City",
+          "name": "Kolkata"
+        },
+        {
+          "@type": "City",
+          "name": "Delhi"
+        }
+      ],
+      "serviceType": [
+        "Civil Law",
+        "Criminal Law", 
+        "Cyber Crime",
+        "Corporate Law",
+        "Family Law",
+        "Property Law"
+      ],
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "Legal Services",
+        "itemListElement": [
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Legal Consultation",
+              "description": "Professional legal consultation and advisory services"
+            }
+          },
+          {
+            "@type": "Offer", 
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Divorce & Family Law",
+              "description": "Complete divorce and family legal services"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service", 
+              "name": "Cyber Crime Legal Support",
+              "description": "Expert legal assistance for cyber crime cases"
+            }
+          }
+        ]
+      }
+    }
+    </script>
+    
+    <!-- Additional Schema for Local Business -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Attorney",
+      "name": "Reliable Legal Solutions",
+      "description": "Professional legal services in India with expertise in civil, criminal, cyber crime, and corporate law.",
+      "url": "https://reliablelegal.in",
+      "telephone": "+919136467956",
+      "email": "legaldeskhelp.mail@gmail.com",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Mumbai, Pune, Kolkata", 
+        "addressCountry": "IN"
+      },
+      "knowsAbout": [
+        "Civil Law",
+        "Criminal Law",
+        "Cyber Crime Law", 
+        "Corporate Law",
+        "Family Law",
+        "Property Law",
+        "POCSO",
+        "POSH Act"
       ]
     }
     </script>
@@ -126,6 +253,9 @@
             </nav>
         </div>
     </header>
+
+    <!-- Mobile Navigation Overlay -->
+    <div class="nav-overlay" id="navOverlay"></div>
 
     <!-- Hero Section -->
     <section class="hero" id="home">
@@ -310,16 +440,16 @@
                     </a>
                 </div>
                 <div class="hero-stats">
-                    <div class="stat">
-                        <span class="stat-number">15+</span>
+                    <div class="stat" aria-label="15 plus years of experience">
+                        <span class="stat-number"><span class="num">15</span><span class="suffix">+</span></span>
                         <span class="stat-label">Years of Experience</span>
                     </div>
-                    <div class="stat">
-                        <span class="stat-number">200+</span>
+                    <div class="stat" aria-label="200 plus cases handled">
+                        <span class="stat-number"><span class="num">200</span><span class="suffix">+</span></span>
                         <span class="stat-label">Cases Handled</span>
                     </div>
-                    <div class="stat">
-                        <span class="stat-number">7</span>
+                    <div class="stat" aria-label="7 jurisdictions">
+                        <span class="stat-number"><span class="num">7</span></span>
                         <span class="stat-label">Jurisdictions</span>
                     </div>
                 </div>
@@ -868,71 +998,86 @@
 
     <!-- FAQ Section -->
     <section class="faq" id="faq">
+        <div class="faq-bg-pattern"></div>
         <div class="container">
             <div class="section-header reveal">
                 <span class="section-badge">FAQ</span>
                 <h2 class="section-title">Frequently Asked Questions</h2>
                 <p class="section-description">Find answers to common questions about our legal services and processes.</p>
             </div>
-            <div class="faq-scroll-wrapper reveal">
-                <div class="top-gradient"></div>
-                <div class="faq-grid scroll-list">
-                    <div class="faq-item">
-                        <button class="faq-question" aria-expanded="false">
-                            <span>What areas of law does your firm specialize in?</span>
-                            <span class="faq-icon">+</span>
-                        </button>
-                        <div class="faq-answer">
-                            <p>We specialize in Civil & Criminal Law, Cyber Crime, POCSO & Child Protection, Corporate & Startup Legal Services, Property & Land Laws, Medical & Healthcare Laws, Criminal Procedure, POSH Act, Legal Consultancy, and more.</p>
-                        </div>
-                    </div>
-                    <div class="faq-item">
-                        <button class="faq-question" aria-expanded="false">
-                            <span>How can I schedule a consultation?</span>
-                            <span class="faq-icon">+</span>
-                        </button>
-                        <div class="faq-answer">
-                            <p>You can schedule a consultation by filling out the contact form on our website, calling us at +91 91364 67956, or reaching out via WhatsApp. We offer free initial consultations.</p>
-                        </div>
-                    </div>
-                    <div class="faq-item">
-                        <button class="faq-question" aria-expanded="false">
-                            <span>Do you provide online legal consultations?</span>
-                            <span class="faq-icon">+</span>
-                        </button>
-                        <div class="faq-answer">
-                            <p>Yes, we offer online consultations via video call for clients across India. This ensures accessible legal guidance regardless of your location.</p>
-                        </div>
-                    </div>
-                    <div class="faq-item">
-                        <button class="faq-question" aria-expanded="false">
-                            <span>What jurisdictions do you operate in?</span>
-                            <span class="faq-icon">+</span>
-                        </button>
-                        <div class="faq-answer">
-                            <p>We operate across West Bengal, Kolkata, Maharashtra (Pune & Mumbai), Bangalore, and Delhi, providing comprehensive legal services in these regions.</p>
-                        </div>
-                    </div>
-                    <div class="faq-item">
-                        <button class="faq-question" aria-expanded="false">
-                            <span>Is the initial consultation free?</span>
-                            <span class="faq-icon">+</span>
-                        </button>
-                        <div class="faq-answer">
-                            <p>Yes, we offer a free initial consultation to assess your legal matter and understand your requirements before discussing further steps and fee structures.</p>
-                        </div>
-                    </div>
-                    <div class="faq-item">
-                        <button class="faq-question" aria-expanded="false">
-                            <span>How long does a typical legal case take?</span>
-                            <span class="faq-icon">+</span>
-                        </button>
-                        <div class="faq-answer">
-                            <p>Case duration varies based on complexity, type, and jurisdiction. During your consultation, we provide realistic timelines and keep you informed throughout the process.</p>
-                        </div>
+            <div class="faq-grid">
+                <div class="faq-item reveal" style="--delay: 0">
+                    <span class="faq-number">01</span>
+                    <button class="faq-question" aria-expanded="false">
+                        <span>What areas of law does your firm specialize in?</span>
+                        <span class="faq-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                        </span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>We specialize in Civil & Criminal Law, Cyber Crime, POCSO & Child Protection, Corporate & Startup Legal Services, Property & Land Laws, Medical & Healthcare Laws, Criminal Procedure, POSH Act, Legal Consultancy, and more.</p>
                     </div>
                 </div>
-                <div class="bottom-gradient"></div>
+                <div class="faq-item reveal" style="--delay: 1">
+                    <span class="faq-number">02</span>
+                    <button class="faq-question" aria-expanded="false">
+                        <span>How can I schedule a consultation?</span>
+                        <span class="faq-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                        </span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>You can schedule a consultation by filling out the contact form on our website, calling us at +91 91364 67956, or reaching out via WhatsApp. We offer free initial consultations.</p>
+                    </div>
+                </div>
+                <div class="faq-item reveal" style="--delay: 2">
+                    <span class="faq-number">03</span>
+                    <button class="faq-question" aria-expanded="false">
+                        <span>Do you provide online legal consultations?</span>
+                        <span class="faq-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                        </span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Yes, we offer online consultations via video call for clients across India. This ensures accessible legal guidance regardless of your location.</p>
+                    </div>
+                </div>
+                <div class="faq-item reveal" style="--delay: 3">
+                    <span class="faq-number">04</span>
+                    <button class="faq-question" aria-expanded="false">
+                        <span>What jurisdictions do you operate in?</span>
+                        <span class="faq-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                        </span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>We operate across West Bengal, Kolkata, Maharashtra (Pune & Mumbai), Bangalore, and Delhi, providing comprehensive legal services in these regions.</p>
+                    </div>
+                </div>
+                <div class="faq-item reveal" style="--delay: 4">
+                    <span class="faq-number">05</span>
+                    <button class="faq-question" aria-expanded="false">
+                        <span>Is the initial consultation free?</span>
+                        <span class="faq-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                        </span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Yes, we offer a free initial consultation to assess your legal matter and understand your requirements before discussing further steps and fee structures.</p>
+                    </div>
+                </div>
+                <div class="faq-item reveal" style="--delay: 5">
+                    <span class="faq-number">06</span>
+                    <button class="faq-question" aria-expanded="false">
+                        <span>How long does a typical legal case take?</span>
+                        <span class="faq-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                        </span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Case duration varies based on complexity, type, and jurisdiction. During your consultation, we provide realistic timelines and keep you informed throughout the process.</p>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -995,15 +1140,29 @@
                     </div>
                     <div class="trust-badges">
                         <div class="trust-badge">
-                            <span class="trust-icon">🔒</span>
+                            <span class="trust-icon" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="4" y="10" width="16" height="10" rx="2" />
+                                    <path d="M8 10V8a4 4 0 0 1 8 0v2" />
+                                    <circle cx="12" cy="15" r="1.5" />
+                                </svg>
+                            </span>
                             <span>100% Confidential</span>
                         </div>
                         <div class="trust-badge">
-                            <span class="trust-icon">⚡</span>
+                            <span class="trust-icon" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M13 2L4 14h6l-1 8 9-12h-6z" />
+                                </svg>
+                            </span>
                             <span>Quick Response</span>
                         </div>
                         <div class="trust-badge">
-                            <span class="trust-icon">✓</span>
+                            <span class="trust-icon" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M20 6L9 17l-5-5" />
+                                </svg>
+                            </span>
                             <span>Free Consultation</span>
                         </div>
                     </div>

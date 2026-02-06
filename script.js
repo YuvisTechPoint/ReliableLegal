@@ -19,6 +19,10 @@ document.addEventListener('DOMContentLoaded', function() {
     initHeroParallax();
     initCounters();
     initLegalModals();
+    initServiceWorker();
+    initPerformanceMonitoring();
+    initLazyLoading();
+    initAccessibility();
 });
 
 /**
@@ -28,6 +32,7 @@ document.addEventListener('DOMContentLoaded', function() {
 function initNavigation() {
     const navToggle = document.getElementById('navToggle');
     const navMenu = document.getElementById('navMenu');
+    const navOverlay = document.getElementById('navOverlay');
     const navLinks = document.querySelectorAll('.nav-link');
     
     // Mobile menu toggle
@@ -36,15 +41,33 @@ function initNavigation() {
             this.classList.toggle('active');
             navMenu.classList.toggle('active');
             
+            // Toggle overlay
+            if (navOverlay) {
+                navOverlay.classList.toggle('active');
+            }
+            
             // Prevent body scroll when menu is open
             document.body.style.overflow = navMenu.classList.contains('active') ? 'hidden' : '';
         });
+        
+        // Close menu when clicking overlay
+        if (navOverlay) {
+            navOverlay.addEventListener('click', function() {
+                navToggle.classList.remove('active');
+                navMenu.classList.remove('active');
+                navOverlay.classList.remove('active');
+                document.body.style.overflow = '';
+            });
+        }
         
         // Close menu when clicking a link
         navLinks.forEach(link => {
             link.addEventListener('click', function() {
                 navToggle.classList.remove('active');
                 navMenu.classList.remove('active');
+                if (navOverlay) {
+                    navOverlay.classList.remove('active');
+                }
                 document.body.style.overflow = '';
             });
         });
@@ -54,6 +77,9 @@ function initNavigation() {
             if (!navToggle.contains(e.target) && !navMenu.contains(e.target)) {
                 navToggle.classList.remove('active');
                 navMenu.classList.remove('active');
+                if (navOverlay) {
+                    navOverlay.classList.remove('active');
+                }
                 document.body.style.overflow = '';
             }
         });
@@ -625,8 +651,8 @@ function animateNumber(element, start, end, duration, suffix = '') {
     requestAnimationFrame(update);
 }
 
-// Initialize counter animation
-document.addEventListener('DOMContentLoaded', animateCounters);
+// Counter animation removed — show static final values instead
+// document.addEventListener('DOMContentLoaded', animateCounters);
 
 // Initialize process timeline animation
 document.addEventListener('DOMContentLoaded', initProcessAnimation);
@@ -665,10 +691,14 @@ document.addEventListener('keydown', function(e) {
     if (e.key === 'Escape') {
         const navToggle = document.getElementById('navToggle');
         const navMenu = document.getElementById('navMenu');
+        const navOverlay = document.getElementById('navOverlay');
         
         if (navMenu && navMenu.classList.contains('active')) {
             navToggle.classList.remove('active');
             navMenu.classList.remove('active');
+            if (navOverlay) {
+                navOverlay.classList.remove('active');
+            }
             document.body.style.overflow = '';
         }
     }
@@ -1045,3 +1075,616 @@ console.log(
     'background: #1a2a4a; color: #c9a961; padding: 10px 20px; font-size: 14px; font-weight: bold;',
     'background: #c9a961; color: #1a2a4a; padding: 10px 20px; font-size: 12px;'
 );
+
+/**
+ * Service Worker Registration
+ * Enables caching and offline functionality
+ */
+function initServiceWorker() {
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', async () => {
+            try {
+                const registration = await navigator.serviceWorker.register('/sw.js');
+                
+                console.log('Service Worker registered successfully:', registration.scope);
+                
+                // Check for updates
+                registration.addEventListener('updatefound', () => {
+                    const newWorker = registration.installing;
+                    
+                    newWorker.addEventListener('statechange', () => {
+                        if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                            // New content available, show update notification
+                            showToast('info', 'Update Available', 'A new version is available. Refresh to update.');
+                        }
+                    });
+                });
+                
+                // Enable background sync for forms
+                if ('sync' in window.ServiceWorkerRegistration.prototype) {
+                    console.log('Background sync supported');
+                }
+                
+            } catch (error) {
+                console.error('Service Worker registration failed:', error);
+            }
+        });
+    }
+}
+
+/**
+ * Performance Monitoring
+ * Tracks Core Web Vitals and user experience metrics
+ */
+function initPerformanceMonitoring() {
+    // Track page load performance
+    window.addEventListener('load', () => {
+        if ('performance' in window) {
+            const perfData = performance.getEntriesByType('navigation')[0];
+            const loadTime = perfData.loadEventEnd - perfData.loadEventStart;
+            const domContentLoaded = perfData.domContentLoadedEventEnd - perfData.domContentLoadedEventStart;
+            
+            console.log(`Page Load Metrics:
+                DOM Content Loaded: ${domContentLoaded}ms
+                Total Load Time: ${loadTime}ms
+                First Contentful Paint: ${performance.getEntriesByName('first-contentful-paint')[0]?.startTime || 'N/A'}ms
+            `);
+            
+            // Track slow loading
+            if (loadTime > 3000) {
+                console.warn('Slow page load detected:', loadTime + 'ms');
+            }
+        }
+    });
+    
+    // Track Core Web Vitals
+    if ('PerformanceObserver' in window) {
+        // Largest Contentful Paint (LCP)
+        new PerformanceObserver((list) => {
+            const entries = list.getEntries();
+            const lastEntry = entries[entries.length - 1];
+            
+            console.log('LCP:', lastEntry.startTime);
+            
+            if (lastEntry.startTime > 2500) {
+                console.warn('Poor LCP detected:', lastEntry.startTime + 'ms');
+            }
+        }).observe({ entryTypes: ['largest-contentful-paint'] });
+        
+        // First Input Delay (FID)
+        new PerformanceObserver((list) => {
+            const entries = list.getEntries();
+            entries.forEach(entry => {
+                console.log('FID:', entry.processingStart - entry.startTime);
+                
+                if (entry.processingStart - entry.startTime > 100) {
+                    console.warn('Poor FID detected:', (entry.processingStart - entry.startTime) + 'ms');
+                }
+            });
+        }).observe({ entryTypes: ['first-input'] });
+        
+        // Cumulative Layout Shift (CLS)
+        let clsValue = 0;
+        new PerformanceObserver((list) => {
+            const entries = list.getEntries();
+            entries.forEach(entry => {
+                if (!entry.hadRecentInput) {
+                    clsValue += entry.value;
+                }
+            });
+            
+            console.log('CLS:', clsValue);
+            
+            if (clsValue > 0.1) {
+                console.warn('Poor CLS detected:', clsValue);
+            }
+        }).observe({ entryTypes: ['layout-shift'] });
+    }
+    
+    // Track JavaScript errors
+    window.addEventListener('error', (event) => {
+        console.error('JavaScript Error:', {
+            message: event.message,
+            source: event.filename,
+            line: event.lineno,
+            column: event.colno,
+            stack: event.error?.stack
+        });
+        
+        // Could send to error reporting service in production
+    });
+    
+    // Track unhandled promise rejections
+    window.addEventListener('unhandledrejection', (event) => {
+        console.error('Unhandled Promise Rejection:', event.reason);
+        
+        // Prevent the default console error
+        event.preventDefault();
+    });
+}
+
+/**
+ * Lazy Loading Implementation
+ * Improves performance by loading images on demand
+ */
+function initLazyLoading() {
+    if ('IntersectionObserver' in window) {
+        const lazyImages = document.querySelectorAll('img[data-src]');
+        
+        const imageObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const img = entry.target;
+                    img.src = img.dataset.src;
+                    img.classList.remove('lazy');
+                    img.classList.add('loaded');
+                    
+                    // Remove observer once loaded
+                    observer.unobserve(img);
+                    
+                    // Handle load/error states
+                    img.addEventListener('load', () => {
+                        img.classList.add('fade-in');
+                    });
+                    
+                    img.addEventListener('error', () => {
+                        img.classList.add('error');
+                        console.warn('Failed to load image:', img.dataset.src);
+                    });
+                }
+            });
+        }, {
+            root: null,
+            rootMargin: '50px',
+            threshold: 0.01
+        });
+        
+        lazyImages.forEach(img => imageObserver.observe(img));
+    } else {
+        // Fallback for older browsers
+        const lazyImages = document.querySelectorAll('img[data-src]');
+        lazyImages.forEach(img => {
+            img.src = img.dataset.src;
+            img.classList.remove('lazy');
+        });
+    }
+}
+
+/**
+ * Network Status Monitoring
+ * Handles online/offline states
+ */
+function initNetworkMonitoring() {
+    function updateNetworkStatus() {
+        if (navigator.onLine) {
+            document.body.classList.remove('offline');
+            showToast('success', 'Back Online', 'Connection restored. Your data is safe.');
+        } else {
+            document.body.classList.add('offline');
+            showToast('warning', 'Offline Mode', 'Working offline. Your form submissions will be sent when connection is restored.');
+        }
+    }
+    
+    window.addEventListener('online', updateNetworkStatus);
+    window.addEventListener('offline', updateNetworkStatus);
+    
+    // Initial check
+    updateNetworkStatus();
+}
+
+/**
+ * Utility: Fetch with retry logic
+ * Implements exponential backoff for failed requests
+ */
+async function fetchWithRetry(url, options, retries = 3) {
+    for (let i = 0; i < retries; i++) {
+        try {
+            const response = await fetch(url, options);
+            
+            if (!response.ok && response.status >= 500) {
+                throw new Error(`Server error: ${response.status}`);
+            }
+            
+            return response;
+        } catch (error) {
+            console.warn(`Attempt ${i + 1} failed:`, error.message);
+            
+            if (i === retries - 1) {
+                throw error;
+            }
+            
+            // Exponential backoff: 1s, 2s, 4s
+            await new Promise(resolve => setTimeout(resolve, 1000 * Math.pow(2, i)));
+        }
+    }
+}
+
+/**
+ * Handle form submission fallbacks
+ * Provides alternative submission methods when primary fails
+ */
+function handleFormFallback(form, reason) {
+    const formData = new FormData(form);
+    const data = Object.fromEntries(formData.entries());
+    
+    // Show fallback options
+    const fallbackOptions = document.createElement('div');
+    fallbackOptions.className = 'fallback-options';
+    fallbackOptions.innerHTML = `
+        <div class="fallback-header">
+            <h4>Email service temporarily unavailable</h4>
+            <p>Please choose an alternative way to contact us:</p>
+        </div>
+        <div class="fallback-buttons">
+            <button onclick="sendViaWhatsApp()" class="btn btn-whatsapp">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                </svg>
+                Send via WhatsApp
+            </button>
+            <button onclick="callDirectly()" class="btn btn-secondary">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/>
+                </svg>
+                Call Now
+            </button>
+            <button onclick="copyEmailDetails()" class="btn btn-outline">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+                    <path d="m5 15-4-4 4-4"/>
+                </svg>
+                Copy Email Details
+            </button>
+        </div>
+    `;
+    
+    // Show fallback modal
+    showToast('warning', 'Connection Issue', reason + ' - Please choose an alternative method below.');
+    
+    // Store form data for later use
+    window.fallbackFormData = data;
+}
+
+/**
+ * Store form data for offline retry
+ */
+function storeFormForRetry(data) {
+    try {
+        const submissions = JSON.parse(localStorage.getItem('pendingSubmissions') || '[]');
+        submissions.push({
+            id: Date.now(),
+            data: data,
+            timestamp: new Date().toISOString()
+        });
+        localStorage.setItem('pendingSubmissions', JSON.stringify(submissions));
+        
+        console.log('Form stored for retry when online');
+    } catch (error) {
+        console.error('Failed to store form for retry:', error);
+    }
+}
+
+/**
+ * Event tracking utility
+ */
+function trackEvent(category, action, label = '') {
+    try {
+        // Google Analytics 4 (if implemented)
+        if (typeof gtag !== 'undefined') {
+            gtag('event', action, {
+                event_category: category,
+                event_label: label
+            });
+        }
+        
+        // Console logging for development
+        console.log(`Event: ${category}/${action}${label ? '/' + label : ''}`);
+    } catch (error) {
+        console.error('Event tracking failed:', error);
+    }
+}
+
+/**
+ * Accessibility Improvements
+ * Enhances keyboard navigation, focus management, and screen reader support
+ */
+function initAccessibility() {
+    // Add skip link functionality
+    addSkipLink();
+    
+    // Improve focus management
+    improveFocusManagement();
+    
+    // Add keyboard navigation for modals
+    improveModalAccessibility();
+    
+    // Enhance form accessibility
+    improveFormAccessibility();
+    
+    // Add proper ARIA attributes
+    addAriaAttributes();
+    
+    // Reduce motion for users who prefer it
+    respectReducedMotion();
+}
+
+/**
+ * Add skip link for keyboard users
+ */
+function addSkipLink() {
+    const skipLink = document.createElement('a');
+    skipLink.href = '#main';
+    skipLink.textContent = 'Skip to main content';
+    skipLink.className = 'skip-link';
+    skipLink.style.cssText = `
+        position: absolute;
+        top: -40px;
+        left: 6px;
+        background: var(--color-primary);
+        color: white;
+        padding: 8px;
+        text-decoration: none;
+        border-radius: 4px;
+        z-index: 10000;
+        transition: top 0.3s;
+    `;
+    
+    skipLink.addEventListener('focus', () => {
+        skipLink.style.top = '6px';
+    });
+    
+    skipLink.addEventListener('blur', () => {
+        skipLink.style.top = '-40px';
+    });
+    
+    document.body.insertBefore(skipLink, document.body.firstChild);
+    
+    // Add main content ID if missing
+    const heroSection = document.querySelector('.hero');
+    if (heroSection && !document.getElementById('main')) {
+        heroSection.setAttribute('id', 'main');
+    }
+}
+
+/**
+ * Improve focus management throughout the site
+ */
+function improveFocusManagement() {
+    // Add visible focus indicators for keyboard users
+    const style = document.createElement('style');
+    style.textContent = `
+        .js-focus-visible :focus:not(.focus-visible) {
+            outline: none;
+        }
+        
+        .focus-visible {
+            outline: 2px solid var(--color-accent, #c9a961) !important;
+            outline-offset: 2px;
+        }
+        
+        .btn:focus-visible,
+        .nav-link:focus-visible,
+        input:focus-visible,
+        textarea:focus-visible,
+        select:focus-visible {
+            outline: 2px solid var(--color-accent, #c9a961);
+            outline-offset: 2px;
+            box-shadow: 0 0 0 4px rgba(201, 169, 97, 0.2);
+        }
+    `;
+    document.head.appendChild(style);
+    
+    // Add focus-visible polyfill behavior
+    document.body.classList.add('js-focus-visible');
+    
+    // Manage focus for navigation
+    const navToggle = document.getElementById('navToggle');
+    const navMenu = document.getElementById('navMenu');
+    
+    if (navToggle && navMenu) {
+        navToggle.addEventListener('click', () => {
+            const isExpanded = navToggle.getAttribute('aria-expanded') === 'true';
+            navToggle.setAttribute('aria-expanded', !isExpanded);
+            
+            if (!isExpanded) {
+                // Focus first menu item when opening
+                const firstLink = navMenu.querySelector('a');
+                if (firstLink) {
+                    setTimeout(() => firstLink.focus(), 100);
+                }
+            }
+        });
+    }
+}
+
+/**
+ * Improve modal accessibility
+ */
+function improveModalAccessibility() {
+    const modal = document.getElementById('legalModal');
+    if (!modal) return;
+    
+    let previouslyFocused = null;
+    
+    // Trap focus within modal
+    function trapFocus(event) {
+        const focusableElements = modal.querySelectorAll(
+            'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+        );
+        
+        const firstElement = focusableElements[0];
+        const lastElement = focusableElements[focusableElements.length - 1];
+        
+        if (event.key === 'Tab') {
+            if (event.shiftKey && document.activeElement === firstElement) {
+                event.preventDefault();
+                lastElement.focus();
+            } else if (!event.shiftKey && document.activeElement === lastElement) {
+                event.preventDefault();
+                firstElement.focus();
+            }
+        }
+        
+        if (event.key === 'Escape') {
+            closeModal();
+        }
+    }
+    
+    function openModal() {
+        previouslyFocused = document.activeElement;
+        modal.setAttribute('aria-hidden', 'false');
+        modal.addEventListener('keydown', trapFocus);
+        
+        // Focus the close button
+        const closeBtn = modal.querySelector('.legal-modal-close');
+        if (closeBtn) {
+            setTimeout(() => closeBtn.focus(), 100);
+        }
+    }
+    
+    function closeModal() {
+        modal.setAttribute('aria-hidden', 'true');
+        modal.removeEventListener('keydown', trapFocus);
+        
+        // Return focus to previously focused element
+        if (previouslyFocused) {
+            previouslyFocused.focus();
+        }
+    }
+    
+    // Update existing modal triggers
+    const triggers = document.querySelectorAll('[data-legal-target]');
+    triggers.forEach(trigger => {
+        trigger.setAttribute('aria-haspopup', 'dialog');
+        
+        trigger.addEventListener('click', openModal);
+    });
+    
+    // Update close handlers
+    const closeBtn = modal.querySelector('.legal-modal-close');
+    const backdrop = modal.querySelector('.legal-modal-backdrop');
+    
+    [closeBtn, backdrop].forEach(element => {
+        if (element) {
+            element.addEventListener('click', closeModal);
+        }
+    });
+}
+
+/**
+ * Enhance form accessibility
+ */
+function improveFormAccessibility() {
+    const form = document.getElementById('contactForm');
+    if (!form) return;
+    
+    // Add proper labels and descriptions
+    const formGroups = form.querySelectorAll('.form-group');
+    formGroups.forEach((group, index) => {
+        const input = group.querySelector('input, select, textarea');
+        const label = group.querySelector('label');
+        
+        if (input && label) {
+            // Ensure label-input association
+            if (!input.id) {
+                input.id = `field-${index}`;
+            }
+            label.setAttribute('for', input.id);
+            
+            // Add required indicator
+            if (input.required) {
+                input.setAttribute('aria-required', 'true');
+                label.innerHTML += ' <span aria-label="required">*</span>';
+            }
+            
+            // Add error container for screen readers
+            const errorContainer = document.createElement('div');
+            errorContainer.className = 'sr-error';
+            errorContainer.setAttribute('aria-live', 'polite');
+            errorContainer.setAttribute('aria-atomic', 'true');
+            errorContainer.style.cssText = 'position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden;';
+            group.appendChild(errorContainer);
+        }
+    });
+    
+    // Improve error messaging
+    const originalShowFieldError = window.showFieldError;
+    window.showFieldError = function(fieldName, message) {
+        const field = document.querySelector(`[name="${fieldName}"]`);
+        if (field) {
+            field.setAttribute('aria-invalid', 'true');
+            field.setAttribute('aria-describedby', `${fieldName}-error`);
+            
+            // Update screen reader error container
+            const errorContainer = field.parentElement.querySelector('.sr-error');
+            if (errorContainer) {
+                errorContainer.textContent = `Error: ${message}`;
+            }
+        }
+        
+        // Call original function
+        if (originalShowFieldError) {
+            originalShowFieldError(fieldName, message);
+        }
+    };
+}
+
+/**
+ * Add proper ARIA attributes to dynamic content
+ */
+function addAriaAttributes() {
+    // Add landmarks
+    const header = document.querySelector('.header');
+    if (header) header.setAttribute('role', 'banner');
+    
+    const nav = document.querySelector('.nav');
+    if (nav) nav.setAttribute('role', 'navigation');
+    
+    const main = document.querySelector('.hero') || document.querySelector('main');
+    if (main && !main.getAttribute('role')) main.setAttribute('role', 'main');
+    
+    const footer = document.querySelector('.footer');
+    if (footer) footer.setAttribute('role', 'contentinfo');
+    
+    // Add aria-labels to interactive elements
+    const backToTop = document.getElementById('backToTop');
+    if (backToTop) {
+        backToTop.setAttribute('aria-label', 'Back to top of page');
+    }
+    
+    // Improve button accessibility
+    const buttons = document.querySelectorAll('button:not([aria-label])');
+    buttons.forEach(button => {
+        if (button.textContent.trim()) {
+            button.setAttribute('aria-label', button.textContent.trim());
+        }
+    });
+    
+    // Add live region for dynamic content
+    const toastContainer = document.getElementById('toastContainer');
+    if (toastContainer) {
+        toastContainer.setAttribute('aria-live', 'polite');
+        toastContainer.setAttribute('aria-atomic', 'false');
+    }
+}
+
+/**
+ * Respect user's reduced motion preference
+ */
+function respectReducedMotion() {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        // Disable animations
+        const style = document.createElement('style');
+        style.textContent = `
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+        `;
+        document.head.appendChild(style);
+        
+        console.log('Reduced motion mode enabled');
+    }
+}
