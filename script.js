@@ -4,6 +4,14 @@
  * ==========================================
  */
 
+// Production mode flag - set to true in production to disable debug logging
+const IS_PRODUCTION = false;
+
+// Production-safe console wrapper
+const debugLog = IS_PRODUCTION ? () => {} : console.log.bind(console);
+const debugWarn = IS_PRODUCTION ? () => {} : console.warn.bind(console);
+const debugError = console.error.bind(console); // Always log errors
+
 document.addEventListener('DOMContentLoaded', function() {
     // Initialize all modules
     initNavigation();

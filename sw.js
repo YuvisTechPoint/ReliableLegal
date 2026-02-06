@@ -1,7 +1,8 @@
-const CACHE_NAME = 'reliable-legal-v1.1';
+const CACHE_NAME = 'reliable-legal-v1.2';
 const STATIC_ASSETS = [
     '/',
     '/index.html',
+    '/404.html',
     '/style.css',
     '/script.js',
     '/robots.txt',
@@ -9,8 +10,7 @@ const STATIC_ASSETS = [
 ];
 
 const EXTERNAL_ASSETS = [
-    'https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap',
-    'https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js'
+    'https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap'
 ];
 
 // Install event - cache essential assets
