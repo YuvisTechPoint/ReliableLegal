@@ -1,0 +1,23 @@
+User-agent: *
+Allow: /
+
+# Allow all major search engines
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Slurp
+Allow: /
+
+# Block specific paths (if any)
+Disallow: /admin/
+Disallow: /.env
+Disallow: /config/
+
+# Sitemap location
+Sitemap: https://reliablelegal.in/sitemap.xml
+
+# Crawl delay for polite crawling
+Crawl-delay: 1
