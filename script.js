@@ -16,6 +16,9 @@ document.addEventListener('DOMContentLoaded', function() {
     initPracticeFilters();
     initFAQ();
     initBackToTop();
+    initHeroParallax();
+    initCounters();
+    initLegalModals();
 });
 
 /**
@@ -146,18 +149,28 @@ function initScrollReveal() {
  */
 function initHeaderScroll() {
     const header = document.getElementById('header');
+    const scrollProgress = document.getElementById('scrollProgress');
     
     if (!header) return;
     
     function handleScroll() {
+        // Header class
         if (window.scrollY > 50) {
             header.classList.add('scrolled');
         } else {
             header.classList.remove('scrolled');
         }
+
+        // Scroll progress bar
+        if (scrollProgress) {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            scrollProgress.style.width = scrolled + "%";
+        }
     }
     
-    window.addEventListener('scroll', throttle(handleScroll, 100));
+    window.addEventListener('scroll', throttle(handleScroll, 10));
     
     // Check initial state
     handleScroll();
@@ -205,7 +218,7 @@ function initContactForm() {
         
         // Build subject line from dropdown
         const subjectMap = {
-            'divorce': 'Divorce & Family Law',
+            'divorce': 'Civil & Criminal Law',
             'cyber': 'Cyber Crime',
             'pocso': 'POCSO & Child Protection',
             'corporate': 'Corporate & Startup Legal',
@@ -220,6 +233,12 @@ function initContactForm() {
         // Prepare email data for Web3Forms
         const emailData = new FormData();
         emailData.append('access_key', EMAIL_CONFIG.accessKey);
+        
+        // Add botcheck for spam prevention
+        if (data.botcheck) {
+            return; // Spam detected
+        }
+        
         emailData.append('subject', `New Consultation Request - ${subjectMap[data.subject] || data.subject}`);
         emailData.append('from_name', data.name);
         emailData.append('email', data.email || 'Not provided');
@@ -290,7 +309,7 @@ function initContactForm() {
             
             // Build subject line
             const subjectMap = {
-                'divorce': 'Divorce & Family Law',
+                'divorce': 'Civil & Criminal Law',
                 'cyber': 'Cyber Crime',
                 'pocso': 'POCSO & Child Protection',
                 'corporate': 'Corporate & Startup Legal',
@@ -433,7 +452,7 @@ function showFieldError(fieldName, message) {
  */
 function createWhatsAppMessage(data) {
     const subjectMap = {
-        'divorce': 'Divorce & Family Law',
+        'divorce': 'Civil & Criminal Law',
         'cyber': 'Cyber Crime',
         'pocso': 'POCSO & Child Protection',
         'corporate': 'Corporate & Startup Legal',
@@ -609,6 +628,9 @@ function animateNumber(element, start, end, duration, suffix = '') {
 // Initialize counter animation
 document.addEventListener('DOMContentLoaded', animateCounters);
 
+// Initialize process timeline animation
+document.addEventListener('DOMContentLoaded', initProcessAnimation);
+
 /**
  * Preloader (Optional)
  * Shows loading animation while page loads
@@ -695,7 +717,7 @@ function initTypingEffect() {
     if (!typingEl) return;
 
     const phrases = [
-        'Divorce & Family Law',
+        'Civil & Criminal Law',
         'Cyber Crime & Digital Offences',
         'POCSO & Child Protection Laws',
         'Corporate & Startup Legal Services',
@@ -753,7 +775,7 @@ function initPracticeFilters() {
     if (!filterBtns.length || !cards.length) return;
 
     const categoryMap = {
-        'Divorce & Family Law': 'family',
+        'Civil & Criminal Law': 'family',
         'Cyber Crime & Digital Offences': 'criminal',
         'POCSO & Child Protection Laws': 'criminal',
         'Corporate & Startup Legal Services': 'corporate',
@@ -845,6 +867,174 @@ function initBackToTop() {
     backToTop.addEventListener('click', function() {
         window.scrollTo({ top: 0, behavior: 'smooth' });
     });
+}
+
+/**
+ * Hero Illustration Parallax
+ * SVG documents respond to mouse movement
+ */
+function initHeroParallax() {
+    const hero = document.querySelector('.hero');
+    const illustration = document.querySelector('.hero-illustration');
+    
+    if (!hero || !illustration || window.innerWidth < 992) return;
+    
+    hero.addEventListener('mousemove', function(e) {
+        const xAxis = (window.innerWidth / 2 - e.pageX) / 40;
+        const yAxis = (window.innerHeight / 2 - e.pageY) / 40;
+        
+        illustration.style.transform = `translate(${xAxis}px, ${yAxis}px) rotateX(${yAxis/4}deg) rotateY(${-xAxis/4}deg)`;
+    });
+    
+    hero.addEventListener('mouseleave', function() {
+        illustration.style.transform = `translate(0, 0) rotateX(0) rotateY(0)`;
+    });
+}
+
+/**
+ * Interactive Counters
+ * Animates numbers when visible
+ */
+function initCounters() {
+    const counters = document.querySelectorAll('.stat-number');
+    const speed = 200;
+    
+    const countObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const target = entry.target;
+                const countStr = target.innerText.replace('+', '').replace('%', '');
+                const count = parseInt(countStr);
+                const suffix = target.innerText.includes('+') ? '+' : (target.innerText.includes('%') ? '%' : '');
+                
+                if (isNaN(count)) return;
+                
+                let start = 0;
+                
+                const updateCount = () => {
+                    const increment = Math.ceil(count / 50);
+                    if (start < count) {
+                        start += increment;
+                        target.innerText = (start > count ? count : start) + suffix;
+                        setTimeout(updateCount, 20);
+                    } else {
+                        target.innerText = count + suffix;
+                    }
+                };
+                
+                updateCount();
+                countObserver.unobserve(target);
+            }
+        });
+    }, { threshold: 0.5 });
+    
+    counters.forEach(counter => countObserver.observe(counter));
+}
+
+/**
+ * Legal Modal Module
+ * Shows policy content only when clicked
+ */
+function initLegalModals() {
+    const triggers = document.querySelectorAll('[data-legal-target]');
+    const modal = document.getElementById('legalModal');
+    const labelEl = modal?.querySelector('#legalModalLabel');
+    const titleEl = modal?.querySelector('#legalModalTitle');
+    const bodyEl = modal?.querySelector('.legal-modal-body');
+    const closeBtn = modal?.querySelector('.legal-modal-close');
+    const backdrop = modal?.querySelector('.legal-modal-backdrop');
+    const sources = document.querySelectorAll('.legal-content-source .legal-card');
+
+    if (!modal || !triggers.length || !sources.length) return;
+
+    const sourceMap = Array.from(sources).reduce((map, card) => {
+        map[card.id] = card;
+        return map;
+    }, {});
+
+    const openModal = (targetId) => {
+        const source = sourceMap[targetId];
+        if (!source || !labelEl || !titleEl || !bodyEl) return;
+
+        const label = source.querySelector('.legal-card-label');
+        const heading = source.querySelector('h3');
+        const paragraph = source.querySelector('p');
+        const list = source.querySelector('ul');
+
+        labelEl.textContent = label ? label.textContent : '';
+        titleEl.textContent = heading ? heading.textContent : '';
+
+        bodyEl.innerHTML = '';
+        if (paragraph) bodyEl.appendChild(paragraph.cloneNode(true));
+        if (list) bodyEl.appendChild(list.cloneNode(true));
+
+        modal.classList.add('active');
+        modal.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+    };
+
+    const closeModal = () => {
+        modal.classList.remove('active');
+        modal.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+    };
+
+    triggers.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.preventDefault(); // Prevent default anchor behavior
+            openModal(btn.dataset.legalTarget);
+        });
+    });
+
+    [closeBtn, backdrop].forEach(el => {
+        if (el) el.addEventListener('click', closeModal);
+    });
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modal.classList.contains('active')) {
+            closeModal();
+        }
+    });
+}
+
+/**
+ * Process Timeline Sequential Animation
+ */
+function initProcessAnimation() {
+    const processSteps = document.querySelectorAll('.process-step');
+    const processTimeline = document.querySelector('.process-timeline');
+    
+    if (!processSteps.length) return;
+    
+    let animationTriggered = false;
+    
+    const processObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting && !animationTriggered) {
+                animationTriggered = true;
+                
+                // Animate the connecting line
+                if (processTimeline) {
+                    processTimeline.classList.add('active');
+                }
+                
+                // Animate steps sequentially with delay
+                processSteps.forEach((step, index) => {
+                    setTimeout(() => {
+                        step.classList.add('active');
+                    }, index * 400); // 400ms delay between each step
+                });
+            }
+        });
+    }, { 
+        threshold: 0.3,
+        rootMargin: '-100px'
+    });
+    
+    // Observe the first step
+    if (processSteps[0]) {
+        processObserver.observe(processSteps[0]);
+    }
 }
 
 /**

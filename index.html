@@ -3,8 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#1a2a4a">
     <meta name="description" content="Reliable Legal Solutions - Comprehensive legal services with a strong focus on client interests and professional ethics. Expert legal assistance from consultation to case resolution.">
     <meta name="keywords" content="law firm, legal services, divorce lawyer, cyber crime, POCSO, corporate law, property law, Kolkata, Mumbai, Pune, Delhi">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://reliablelegal.in/">
+    <meta property="og:title" content="Reliable Legal Solutions | Trusted Legal Services Across India">
+    <meta property="og:description" content="Expert legal assistance for Divorce, Cyber Crime, Corporate Law, and more. Protecting your rights with 15+ years of experience.">
+    <meta property="og:image" content="https://reliablelegal.in/assets/og-image.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://reliablelegal.in/">
+    <meta property="twitter:title" content="Reliable Legal Solutions | Trusted Legal Services Across India">
+    <meta property="twitter:description" content="Expert legal assistance for Divorce, Cyber Crime, Corporate Law, and more. Protecting your rights with 15+ years of experience.">
+    <meta property="twitter:image" content="https://reliablelegal.in/assets/og-image.jpg">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚖</text></svg>">
+    <link rel="apple-touch-icon" href="https://reliablelegal.in/assets/apple-touch-icon.png">
+
     <title>Reliable Legal Solutions | Trusted Legal Services Across India</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -12,14 +32,73 @@
     <link rel="stylesheet" href="style.css">
     <!-- EmailJS SDK -->
     <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
+    <!-- Structured Data (Schema.org) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "LegalService",
+      "name": "Reliable Legal Solutions",
+      "image": "https://reliablelegal.in/assets/logo.png",
+      "@id": "https://reliablelegal.in",
+      "url": "https://reliablelegal.in",
+      "telephone": "+919867551156",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Various Locations",
+        "addressLocality": "Mumbai, Pune, Kolkata",
+        "addressCountry": "IN"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 19.0760,
+        "longitude": 72.8777
+      },
+      "openingHoursSpecification": {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": [
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday",
+          "Saturday"
+        ],
+        "opens": "09:00",
+        "closes": "20:00"
+      },
+      "sameAs": [
+        "https://www.facebook.com/reliablelegal",
+        "https://www.linkedin.com/company/reliablelegal"
+      ]
+    }
+    </script>
 </head>
 <body>
     <!-- Preloader -->
     <div class="preloader" id="preloader">
         <div class="preloader-inner">
-            <span class="preloader-icon">⚖</span>
+            <div class="preloader-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="60" height="60">
+                    <path d="M16 16 20 22"></path>
+                    <path d="m19 21-1.4-1.4"></path>
+                    <path d="m3 3 1.6 1.6"></path>
+                    <path d="M5 5 9 11"></path>
+                    <path d="m8 10-1.4-1.4"></path>
+                    <path d="M12 21H3a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h18a2 2 0 0 1 2 2v11"></path>
+                    <path d="m22 22-5-5"></path>
+                    <path d="M9 7h6"></path>
+                    <path d="M9 11h6"></path>
+                    <path d="M9 15h3"></path>
+                </svg>
+            </div>
             <div class="preloader-bar"><div class="preloader-progress"></div></div>
         </div>
+    </div>
+
+    <!-- Scroll Progress Bar -->
+    <div class="scroll-progress-container">
+        <div class="scroll-progress-bar" id="scrollProgress"></div>
     </div>
 
     <!-- Header -->
@@ -52,7 +131,7 @@
     <section class="hero" id="home">
         <div class="hero-bg">
             <div class="hero-illustration">
-                <svg class="legal-documents" viewBox="0 0 500 600" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <svg class="legal-documents" viewBox="0 0 500 600" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Illustration of professional legal documents including notices and agreements">
                     <!-- Document 1 -->
                     <g class="doc-group doc-1">
                         <rect x="40" y="60" width="180" height="240" rx="8" fill="#faf9f7" stroke="#c9a961" stroke-width="2" opacity="0.9"/>
@@ -127,17 +206,54 @@
                         <text x="300" y="365" font-family="'Brush Script MT', cursive" font-size="10" fill="#c9a961" opacity="0.5" transform="rotate(8 300 365)">Admitted</text>
                         <circle cx="280" cy="345" r="10" fill="#c9a961" opacity="0.7"/>
                     </g>
-                    <!-- Scales of Justice -->
+                    <!-- Scales of Justice (Improved) -->
                     <g class="scales-group">
-                        <line x1="420" y1="140" x2="420" y2="280" stroke="#1a2a4a" stroke-width="3" opacity="0.7"/>
-                        <circle cx="420" cy="135" r="8" fill="#c9a961" opacity="0.8"/>
-                        <line x1="360" y1="180" x2="480" y2="180" stroke="#c9a961" stroke-width="2.5" opacity="0.8"/>
-                        <path d="M 360 180 L 340 220 L 380 220 Z" fill="#1a2a4a" opacity="0.3"/>
-                        <path d="M 480 180 L 460 220 L 500 220 Z" fill="#1a2a4a" opacity="0.3"/>
-                        <rect x="405" y="280" width="30" height="12" fill="#c9a961" opacity="0.6"/>
-                        <text x="375" y="255" font-family="'Brush Script MT', cursive" font-size="12" fill="#1a2a4a" opacity="0.5" font-style="italic">Justice</text>
-                        <!-- Verified mark near scales -->
-                        <text x="440" y="240" font-family="'Segoe Script', cursive" font-size="9" fill="#c9a961" opacity="0.4" transform="rotate(-8 440 240)">Verified ✓</text>
+                         <!-- Central Stand -->
+                        <defs>
+                            <linearGradient id="goldGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" stop-color="#c9a961" stop-opacity="0.8" />
+                                <stop offset="100%" stop-color="#e6c870" stop-opacity="0.9" />
+                            </linearGradient>
+                        </defs>
+                        
+                        <!-- Base -->
+                        <path d="M 395 280 L 445 280 L 435 270 L 405 270 Z" fill="url(#goldGradient)" />
+                        <!-- Rod -->
+                        <line x1="420" y1="140" x2="420" y2="270" stroke="#1a2a4a" stroke-width="3" opacity="0.8" stroke-linecap="round"/>
+                        
+                        <!-- Top Pivot -->
+                        <circle cx="420" cy="145" r="4" fill="#1a2a4a" />
+                        
+                        <!-- Balance Beam (Rotating part) -->
+                        <g class="balance-beam" style="transform-origin: 420px 145px">
+                            <line x1="360" y1="145" x2="480" y2="145" stroke="#c9a961" stroke-width="3" stroke-linecap="round"/>
+                            
+                            <!-- Left Pan Group -->
+                            <g class="scale-pan-left">
+                                <!-- Strings -->
+                                <line x1="360" y1="145" x2="345" y2="200" stroke="#1a2a4a" stroke-width="0.5" opacity="0.4"/>
+                                <line x1="360" y1="145" x2="375" y2="200" stroke="#1a2a4a" stroke-width="0.5" opacity="0.4"/>
+                                <!-- Pan -->
+                                <path d="M 345 200 Q 360 220 375 200" fill="#1a2a4a" fill-opacity="0.1" stroke="#1a2a4a" stroke-width="1" opacity="0.6"/>
+                            </g>
+                            
+                            <!-- Right Pan Group -->
+                             <g class="scale-pan-right">
+                                <!-- Strings -->
+                                <line x1="480" y1="145" x2="465" y2="200" stroke="#1a2a4a" stroke-width="0.5" opacity="0.4"/>
+                                <line x1="480" y1="145" x2="495" y2="200" stroke="#1a2a4a" stroke-width="0.5" opacity="0.4"/>
+                                <!-- Pan -->
+                                <path d="M 465 200 Q 480 220 495 200" fill="#1a2a4a" fill-opacity="0.1" stroke="#1a2a4a" stroke-width="1" opacity="0.6"/>
+                            </g>
+                        </g>
+
+                        <!-- Text -->
+                        <text x="420" y="295" font-family="'Cormorant Garamond', serif" font-size="14" fill="#1a2a4a" text-anchor="middle" font-weight="600" opacity="0.8" style="letter-spacing: 2px;">JUSTICE</text>
+                        <!-- Verified mark -->
+                        <g transform="translate(450, 240) rotate(-10)">
+                            <text font-family="'Segoe Script', cursive" font-size="9" fill="#c9a961" opacity="0.8">Verified</text>
+                            <path d="M 40 5 L 44 10 L 52 0" stroke="#2e7d5a" stroke-width="1.5" fill="none" transform="translate(0, 2)" />
+                        </g>
                     </g>
                     <!-- Agreement Document with Gavel -->
                     <g class="gavel-group">
@@ -170,8 +286,7 @@
             </div>
         </div>
         <div class="container">
-            <div class="hero-content">
-                <span class="hero-badge">Trusted Legal Partner Since 2011</span>
+            <div class="hero-content reveal reveal--left">
                 <h1 class="hero-title">
                     Reliable Legal Solutions with <span class="highlight">Strong Focus</span> on Client Interests
                 </h1>
@@ -180,12 +295,11 @@
                 </p>
                 <div class="hero-typing">
                     <span class="typing-label">We specialize in</span>
-                    <span class="typing-text" id="typingText">Divorce & Family Law</span>
-                    <span class="typing-cursor">|</span>
+                    <span class="typing-text" id="typingText">Civil & Criminal Law</span>
                 </div>
                 <div class="hero-cta">
                     <a href="#contact" class="btn btn-primary">Schedule Consultation</a>
-                    <a href="tel:+919867551156" class="btn btn-secondary">
+                    <a href="tel:+919136467956" class="btn btn-secondary">
                         <span class="btn-icon">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18">
                                 <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/>
@@ -198,10 +312,10 @@
                 <div class="hero-stats">
                     <div class="stat">
                         <span class="stat-number">15+</span>
-                        <span class="stat-label">Years Experience</span>
+                        <span class="stat-label">Years of Experience</span>
                     </div>
                     <div class="stat">
-                        <span class="stat-number">500+</span>
+                        <span class="stat-number">200+</span>
                         <span class="stat-label">Cases Handled</span>
                     </div>
                     <div class="stat">
@@ -223,7 +337,7 @@
     <div class="marquee-strip" aria-hidden="true">
         <div class="marquee-track">
             <div class="marquee-content">
-                <span>Divorce & Family Law</span><span class="marquee-dot">◆</span>
+                <span>Civil & Criminal Law</span><span class="marquee-dot">◆</span>
                 <span>Cyber Crime</span><span class="marquee-dot">◆</span>
                 <span>POCSO & Child Protection</span><span class="marquee-dot">◆</span>
                 <span>Corporate Law</span><span class="marquee-dot">◆</span>
@@ -237,7 +351,7 @@
                 <span>Environmental Law</span><span class="marquee-dot">◆</span>
             </div>
             <div class="marquee-content">
-                <span>Divorce & Family Law</span><span class="marquee-dot">◆</span>
+                <span>Civil & Criminal Law</span><span class="marquee-dot">◆</span>
                 <span>Cyber Crime</span><span class="marquee-dot">◆</span>
                 <span>POCSO & Child Protection</span><span class="marquee-dot">◆</span>
                 <span>Corporate Law</span><span class="marquee-dot">◆</span>
@@ -257,7 +371,7 @@
     <section class="about" id="about">
         <div class="container">
             <div class="about-grid">
-                <div class="about-content reveal">
+                <div class="about-content reveal reveal--left">
                     <span class="section-badge">About Us</span>
                     <h2 class="section-title">Committed to Protecting Your Rights</h2>
                     <p class="about-lead">
@@ -286,7 +400,7 @@
                         <cite>— Mohona Biswas, Co-Founder</cite>
                     </blockquote>
                 </div>
-                <div class="about-visual reveal">
+                <div class="about-visual reveal reveal--right">
                     <div class="about-card">
                         <div class="about-card-inner">
                             <h3>Professional Information</h3>
@@ -297,7 +411,7 @@
                     <div class="jurisdictions-card">
                         <h4>Working Jurisdictions</h4>
                         <ul class="jurisdiction-list">
-                            <li>West Bengal & Kolkata</li>
+                            <li>West Bengal, Kolkata</li>
                             <li>Maharashtra, Pune & Mumbai</li>
                             <li>Bangalore</li>
                             <li>Delhi</li>
@@ -414,7 +528,7 @@
                             <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
                         </svg>
                     </div>
-                    <h3>Divorce & Family Law</h3>
+                    <h3>Civil & Criminal Law</h3>
                     <p>Legal aspects related to divorce, judicial separation, maintenance, child custody, domestic violence, and mutual consent proceedings under Indian family laws.</p>
                 </article>
 
@@ -592,28 +706,28 @@
             </div>
             <div class="process-timeline">
                 <div class="process-step reveal">
-                    <div class="step-number">01</div>
+                    <div class="step-number"><span>01</span></div>
                     <div class="step-content">
                         <h3>Initial Consultation</h3>
                         <p>Free assessment of your legal matter to understand your situation and requirements.</p>
                     </div>
                 </div>
                 <div class="process-step reveal">
-                    <div class="step-number">02</div>
+                    <div class="step-number"><span>02</span></div>
                     <div class="step-content">
                         <h3>Case Analysis</h3>
                         <p>Thorough review of facts, evidence, and applicable laws to build a strong strategy.</p>
                     </div>
                 </div>
                 <div class="process-step reveal">
-                    <div class="step-number">03</div>
+                    <div class="step-number"><span>03</span></div>
                     <div class="step-content">
                         <h3>Legal Action</h3>
                         <p>Expert representation in courts, tribunals, and negotiations on your behalf.</p>
                     </div>
                 </div>
                 <div class="process-step reveal">
-                    <div class="step-number">04</div>
+                    <div class="step-number"><span>04</span></div>
                     <div class="step-content">
                         <h3>Resolution</h3>
                         <p>Achieving the best possible outcome while keeping you informed at every stage.</p>
@@ -667,11 +781,11 @@
                         <div class="team-avatar">
                             <span class="avatar-initials">SG</span>
                         </div>
-                        <span class="team-badge">Co-Founder</span>
+                        <span class="team-badge">Team Member</span>
                     </div>
                     <div class="team-card-body">
                         <h3>Lawyer Sauptika Gucchait</h3>
-                        <p class="team-role">LLB.</p>
+                        <p class="team-role">LLB, Co-Founder</p>
                         <p class="team-description">Dedicated legal professional committed to providing expert legal assistance across multiple practice areas.</p>
                     </div>
                 </article>
@@ -681,7 +795,7 @@
                         <div class="team-avatar">
                             <span class="avatar-initials">MB</span>
                         </div>
-                        <span class="team-badge">Co-Founder</span>
+                        <span class="team-badge">Team Member</span>
                     </div>
                     <div class="team-card-body">
                         <h3>Mohona Biswas</h3>
@@ -708,17 +822,42 @@
                 </div>
                 <div class="consultation-options">
                     <div class="consultation-card">
-                        <div class="consultation-icon">💬</div>
+                        <div class="consultation-icon" aria-hidden="true">
+                            <svg viewBox="0 0 32 32" role="img" focusable="false">
+                                <path d="M6 8h20a4 4 0 0 1 4 4v7a4 4 0 0 1-4 4h-6l-4 5-1.5-5H6a4 4 0 0 1-4-4v-7a4 4 0 0 1 4-4z"/>
+                                <path d="M11 16h10"/>
+                                <path d="M11 20h6"/>
+                            </svg>
+                        </div>
                         <h3>Free Consultation</h3>
                         <p>Initial case assessment at no cost to understand your legal requirements.</p>
                     </div>
                     <div class="consultation-card">
-                        <div class="consultation-icon">🖥️</div>
+                        <div class="consultation-icon" aria-hidden="true">
+                            <svg viewBox="0 0 32 32" role="img" focusable="false">
+                                <rect x="4" y="7" width="24" height="15" rx="3" ry="3"/>
+                                <rect class="icon-fill" x="7" y="10" width="18" height="9" rx="2" ry="2"/>
+                                <path d="M12 25h8"/>
+                                <path d="M10 28h12"/>
+                            </svg>
+                        </div>
                         <h3>Online Consultation</h3>
                         <p>Convenient virtual consultations from anywhere in India via video call.</p>
                     </div>
                     <div class="consultation-card">
-                        <div class="consultation-icon">🏛️</div>
+                        <div class="consultation-icon" aria-hidden="true">
+                            <svg viewBox="0 0 32 32" role="img" focusable="false">
+                                <path class="icon-fill" d="M16 5 4 11h24z"/>
+                                <path d="M16 5 4 11h24z"/>
+                                <line x1="6" y1="13" x2="6" y2="23"/>
+                                <line x1="11" y1="13" x2="11" y2="23"/>
+                                <line x1="16" y1="13" x2="16" y2="23"/>
+                                <line x1="21" y1="13" x2="21" y2="23"/>
+                                <line x1="26" y1="13" x2="26" y2="23"/>
+                                <rect x="5" y="23" width="22" height="2" rx="1" ry="1"/>
+                                <path d="M4 27h24"/>
+                            </svg>
+                        </div>
                         <h3>Offline Consultation</h3>
                         <p>In-person meetings at our office for detailed case discussions.</p>
                     </div>
@@ -744,7 +883,7 @@
                             <span class="faq-icon">+</span>
                         </button>
                         <div class="faq-answer">
-                            <p>We specialize in Divorce & Family Law, Cyber Crime, POCSO & Child Protection, Corporate & Startup Legal Services, Property & Land Laws, Medical & Healthcare Laws, Criminal Procedure, POSH Act, Legal Consultancy, and more.</p>
+                            <p>We specialize in Civil & Criminal Law, Cyber Crime, POCSO & Child Protection, Corporate & Startup Legal Services, Property & Land Laws, Medical & Healthcare Laws, Criminal Procedure, POSH Act, Legal Consultancy, and more.</p>
                         </div>
                     </div>
                     <div class="faq-item">
@@ -753,7 +892,7 @@
                             <span class="faq-icon">+</span>
                         </button>
                         <div class="faq-answer">
-                            <p>You can schedule a consultation by filling out the contact form on our website, calling us at +91 98675 51156, or reaching out via WhatsApp. We offer free initial consultations.</p>
+                            <p>You can schedule a consultation by filling out the contact form on our website, calling us at +91 91364 67956, or reaching out via WhatsApp. We offer free initial consultations.</p>
                         </div>
                     </div>
                     <div class="faq-item">
@@ -771,7 +910,7 @@
                             <span class="faq-icon">+</span>
                         </button>
                         <div class="faq-answer">
-                            <p>We operate across West Bengal & Kolkata, Maharashtra (Pune & Mumbai), Bangalore, and Delhi, providing comprehensive legal services in these regions.</p>
+                            <p>We operate across West Bengal, Kolkata, Maharashtra (Pune & Mumbai), Bangalore, and Delhi, providing comprehensive legal services in these regions.</p>
                         </div>
                     </div>
                     <div class="faq-item">
@@ -809,7 +948,7 @@
                         Reach out to us for reliable legal guidance. We're here to protect your rights and support your legal journey.
                     </p>
                     <div class="contact-methods">
-                        <a href="tel:+919867551156" class="contact-method">
+                        <a href="tel:+919136467956" class="contact-method">
                             <div class="contact-method-icon">
                                 <svg viewBox="0 0 24 24" fill="currentColor" width="24" height="24">
                                     <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
@@ -817,10 +956,10 @@
                             </div>
                             <div class="contact-method-details">
                                 <span class="contact-method-label">Call Us</span>
-                                <span class="contact-method-value">+91 98675 51156</span>
+                                <span class="contact-method-value">+91 91364 67956</span>
                             </div>
                         </a>
-                        <a href="https://wa.me/919867551156" class="contact-method contact-method--whatsapp" target="_blank" rel="noopener">
+                        <a href="https://wa.me/919136467956" class="contact-method contact-method--whatsapp" target="_blank" rel="noopener">
                             <div class="contact-method-icon">
                                 <svg viewBox="0 0 24 24" fill="currentColor" width="24" height="24">
                                     <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
@@ -828,10 +967,10 @@
                             </div>
                             <div class="contact-method-details">
                                 <span class="contact-method-label">WhatsApp</span>
-                                <span class="contact-method-value">+91 98675 51156</span>
+                                <span class="contact-method-value">+91 91364 67956</span>
                             </div>
                         </a>
-                        <a href="tel:+919136467956" class="contact-method">
+                        <a href="tel:+919867551156" class="contact-method">
                             <div class="contact-method-icon contact-method-icon--ringing">
                                 <svg viewBox="0 0 24 24" fill="currentColor" width="24" height="24">
                                     <!-- Phone icon -->
@@ -850,7 +989,7 @@
                             </div>
                             <div class="contact-method-details">
                                 <span class="contact-method-label">Alternate Number</span>
-                                <span class="contact-method-value">+91 91364 67956</span>
+                                <span class="contact-method-value">+91 98675 51156</span>
                             </div>
                         </a>
                     </div>
@@ -871,6 +1010,7 @@
                 </div>
                 <div class="contact-form-wrapper reveal">
                     <form class="contact-form" id="contactForm">
+                        <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
                         <h3>Send Us a Message</h3>
                         <div class="form-group">
                             <label for="name">Full Name</label>
@@ -888,7 +1028,7 @@
                             <label for="subject">Legal Matter</label>
                             <select id="subject" name="subject" required>
                                 <option value="">Select your legal concern</option>
-                                <option value="divorce">Divorce & Family Law</option>
+                                <option value="divorce">Civil & Criminal Law</option>
                                 <option value="cyber">Cyber Crime</option>
                                 <option value="pocso">POCSO & Child Protection</option>
                                 <option value="corporate">Corporate & Startup Legal</option>
@@ -923,6 +1063,79 @@
         </div>
     </section>
 
+    <!-- Legal Information Section - Hidden from landing page -->
+    <section class="legal-section hidden-from-landing" id="legal">
+        <div class="container">
+            <div class="legal-header reveal">
+                <span class="section-badge section-badge--light">Policy Center</span>
+                <h2 class="section-title section-title--light">Disclaimer, Privacy & Terms</h2>
+                <p class="section-description">
+                    Transparent guidelines that explain how we operate, protect your information, and outline the legal terms governing our services.
+                </p>
+            </div>
+            <div class="legal-actions reveal">
+                <p class="legal-helper">Tap to view the details you need.</p>
+                <div class="legal-pill-group">
+                    <button class="legal-pill" data-legal-target="disclaimer">Disclaimer</button>
+                    <button class="legal-pill" data-legal-target="privacy">Privacy Policy</button>
+                    <button class="legal-pill" data-legal-target="terms">Terms of Service</button>
+                </div>
+            </div>
+
+            <!-- Hidden content source for modal population -->
+            <div class="legal-grid legal-content-source" aria-hidden="true">
+                <article class="legal-card" id="disclaimer">
+                    <div class="legal-card-label">Updated Feb 2026</div>
+                    <h3>Disclaimer</h3>
+                    <p>
+                        Communication through this website does not create an attorney-client relationship. Information shared here is
+                        educational in nature and should not be treated as formal legal advice until a written engagement is signed.
+                    </p>
+                    <ul>
+                        <li>No solicitation or advertising is intended per Bar Council of India regulations.</li>
+                        <li>Case outcomes mentioned are illustrative; results vary based on facts and jurisdiction.</li>
+                        <li>Contact us directly for matter-specific guidance before taking any legal action.</li>
+                    </ul>
+                </article>
+                <article class="legal-card" id="privacy">
+                    <div class="legal-card-label">Your Data</div>
+                    <h3>Privacy Policy</h3>
+                    <p>
+                        We collect only essential information submitted through forms, calls, or WhatsApp to schedule consultations and respond to your queries. Data is encrypted in transit and stored securely.
+                    </p>
+                    <ul>
+                        <li>No sale of personal data to third parties.</li>
+                        <li>Access restricted to authorized advocates handling your matter.</li>
+                        <li>Request data deletion any time via <a href="mailto:reliable.legal.solutions@gmail.com">email</a>.</li>
+                    </ul>
+                </article>
+                <article class="legal-card" id="terms">
+                    <div class="legal-card-label">Engagement Rules</div>
+                    <h3>Terms of Service</h3>
+                    <p>
+                        Services commence only after confirmation of scope, fee agreement, and KYC compliance. By booking a consultation, you agree to keep shared documents accurate and lawful.
+                    </p>
+                    <ul>
+                        <li>Consultation fees are non-refundable once the session begins.</li>
+                        <li>Timelines depend on court schedules beyond our control.</li>
+                        <li>All content on this site remains the intellectual property of Reliable Legal Solutions.</li>
+                    </ul>
+                </article>
+            </div>
+
+            <!-- Policy modal -->
+            <div class="legal-modal" id="legalModal" aria-hidden="true">
+                <div class="legal-modal-backdrop"></div>
+                <div class="legal-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="legalModalTitle">
+                    <button class="legal-modal-close" aria-label="Close policy dialog">&times;</button>
+                    <div class="legal-modal-label" id="legalModalLabel"></div>
+                    <h3 class="legal-modal-title" id="legalModalTitle"></h3>
+                    <div class="legal-modal-body"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
@@ -952,7 +1165,7 @@
                 <div class="footer-links">
                     <h4>Practice Areas</h4>
                     <ul>
-                        <li><a href="#practice-areas">Divorce & Family Law</a></li>
+                        <li><a href="#practice-areas">Civil & Criminal Law</a></li>
                         <li><a href="#practice-areas">Cyber Crime</a></li>
                         <li><a href="#practice-areas">POCSO & Child Protection</a></li>
                         <li><a href="#practice-areas">Corporate Law</a></li>
@@ -968,7 +1181,7 @@
                                     <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
                                 </svg>
                             </span>
-                            <a href="tel:+919867551156">+91 98675 51156</a>
+                            <a href="tel:+919136467956">+91 91364 67956</a>
                         </li>
                         <li>
                             <span>
@@ -977,7 +1190,7 @@
                                     <path d="M14.5 2a8.38 8.38 0 015.5 2.1M14.5 6A4.5 4.5 0 0118 7.5"/>
                                 </svg>
                             </span>
-                            <a href="tel:+919136467956">+91 91364 67956</a>
+                            <a href="tel:+919867551156">+91 98675 51156</a>
                         </li>
                         <li>
                             <span>
@@ -985,14 +1198,23 @@
                                     <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
                                 </svg>
                             </span>
-                            <a href="https://wa.me/919867551156" target="_blank" rel="noopener">WhatsApp Us</a>
+                            <a href="https://wa.me/919136467956" target="_blank" rel="noopener">WhatsApp Us</a>
                         </li>
                     </ul>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2026 Reliable Legal Solutions. All rights reserved.</p>
-                <p class="footer-disclaimer">Disclaimer: This website is for informational purposes only and does not constitute legal advice.</p>
+                <div class="footer-bottom-info">
+                    <p>&copy; 2026 Reliable Legal Solutions. All rights reserved.</p>
+                    <div class="footer-legal-links">
+                        <a href="#" data-legal-target="disclaimer">Disclaimer</a>
+                        <a href="#" data-legal-target="privacy">Privacy Policy</a>
+                        <a href="#" data-legal-target="terms">Terms of Service</a>
+                    </div>
+                </div>
+                <p class="footer-disclaimer">
+                    <strong>Disclaimer:</strong> Communication with Reliable Legal Solutions through this website does not create an attorney-client relationship. This website is for informational purposes only and does not constitute legal advice. As per the rules of the Bar Council of India, solicitors and advocates are not permitted to advertise or solicit work in any form or manner.
+                </p>
             </div>
         </div>
     </footer>
@@ -1005,7 +1227,7 @@
     </button>
 
     <!-- WhatsApp Floating Button -->
-    <a href="https://wa.me/919867551156" class="whatsapp-float" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
+    <a href="https://wa.me/919136467956" class="whatsapp-float" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
         <div class="whatsapp-pulse"></div>
         <svg viewBox="0 0 24 24" fill="currentColor">
             <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
