@@ -3554,6 +3554,37 @@ section {
 }
 
 /* ========================================
+   RESPONSIVE HERO: reduce empty spacing on small viewports
+   ======================================== */
+@media (max-width: 768px) {
+    .hero {
+        /* Do not force full viewport height on small devices */
+        min-height: auto;
+        padding: var(--space-12) 0 var(--space-6);
+        align-items: flex-start;
+    }
+
+    .hero-bg {
+        background-position: center top;
+    }
+
+    .hero-illustration { display: none; }
+
+    .hero-cta { margin-bottom: var(--space-6); }
+
+    .hero-stats { padding: var(--space-6) 0 var(--space-3); margin-top: var(--space-4); }
+}
+
+@media (max-width: 480px) {
+    .hero {
+        padding: var(--space-6) 0 var(--space-4);
+    }
+
+    .hero-title { font-size: clamp(1.6rem, 6vw, 2.4rem); }
+    .hero-description { margin-bottom: var(--space-4); }
+}
+
+/* ========================================
    PRINT STYLES
    ======================================== */
 @media print {
